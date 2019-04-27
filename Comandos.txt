@@ -1,0 +1,80 @@
+*****COMANDOS PROJETO ANGULAR 7*****
+
+--------------------------------------- INICIANDO PRIMEIRO MODULO DO CURSO -------------------------------------------------------------------------------
+
+
+*** COMANDOS DE INSTALAÇÃO E CONFIGURAÇÃO ***
+
+//Criando o projeto "financas" (criando com as rotas padrão "--routing" e sem baixar os arquivos de tests "--skip-tests")
+ng new financas --routing --skip-tests
+
+**ENTRAR NA PASTA DO PROJETO QUE ACABOU DE CRIAR**
+
+***Instalando as bibliotecas/plugins que serão utilizados no curso***
+
+//Instalando biblioteca do bootstrap e jquery.
+npm i bootstrap jquery --save
+
+//Instalando plugin do imask (plugin colocar mascara nos campos)
+npm i angular-imask --save
+
+//Instalando biblioteca do currency formatter (biblioteca pra manipular conversão de valores)
+npm i currency-formatter --save
+
+//Instalando biblioteca do moment (usado pra realizar manipulações de datas)
+npm install moment --save
+
+//Instalando o plugin do toastr (mensagens pro sistema personalizada "aparece e some")
+npm i toastr --save
+
+//Instalando biblioteca do prime faces (componentes prontos)
+npm install primeng --save 
+npm install chart.js --save  (necessário para trabalhar com os graficos do prime faces)
+npm install primeicons --save  
+
+//Instalando biblioteca para simular um backend "em memoria" no proprio angular
+npm i angular-in-memory-web-api --save
+
+*** OBS.: Configurar as dependencias... ***
+
+1- Ir no arquivo "angular.json" e procurar por "architect", ir no "styles" dele e adicionar o caminho do "bootstrap.min.css", "primeicons.css",
+"toastr.min.css", "theme.css", "primeng.min.css".
+2- Ainda no "architect", ir no "scripts" e adicionar o caminho do "bootstrap.min.js", "jquery.min.js", "chart.bundle.js"
+
+"architect": {
+
+			"styles": [
+              "node_modules/primeicons/primeicons.css",  //ADICIONAR ESSA LINHA
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",  //ADICIONAR ESSA LINHA
+              "node_modules/toastr/build/toastr.min.css",  //ADICIONAR ESSA LINHA
+              "node_modules/primeng/resources/themes/nova-light/theme.css",  //ADICIONAR ESSA LINHA
+              "node_modules/primeng/resources/primeng.min.css",  //ADICIONAR ESSA LINHA
+              "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",  //ADICIONAR ESSA LINHA
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",  //ADICIONAR ESSA LINHA
+              "node_modules/chart.js/dist/chart.bundle.js"  //ADICIONAR ESSA LINHA
+            ]
+}
+
+
+--------------------------------------- FINALIZANDO PRIMEIRO MODULO DO CURSO -------------------------------------------------------------------------------
+
+
+--------------------------------------- INICIANDO SEGUNDO MODULO DO CURSO -------------------------------------------------------------------------------
+*** COMANDOS DE DESENVOLVIMENTO ***
+
+//Comando pra criar o modulo "categorias" que ficará no caminho "src/app/paginas".
+ ng g m paginas/categorias --routing
+ 
+//Comando para criar o componente "lista-categoria" que ficará no caminho "src/app/paginas/categorias".
+ng g c paginas/categorias/lista-categoria
+ 
+//Comando para criar o componente "formulario-categoria" que ficará no caminho "src/app/paginas/categorias".
+ng g c paginas/categorias/formulario-categoria
+
+//Comando para criar o service "categoria.service.ts" que ficará no caminho "paginas/categorias/classes"
+ng g s paginas/categorias/classes/categoria
+ 
+ 
