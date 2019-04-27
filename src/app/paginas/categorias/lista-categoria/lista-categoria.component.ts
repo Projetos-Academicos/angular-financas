@@ -20,7 +20,7 @@ export class ListaCategoriaComponent implements OnInit {
       error => alert('Erro ao carregar as categorias')
     )
   }
-
+  
   excluir(categoria) {
 
     const confirmarExclusao = confirm('Deseja realmente excluir esse registro?');

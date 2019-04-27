@@ -1,3 +1,51 @@
-<p>
-  formulario-categoria works!
-</p>
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/" class="">Home</a></li>
+    <li class="breadcrumb-item"><a routerLink="/categorias" class="">Categorias</a></li>
+    <li class="breadcrumb-item active">Formulário</li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md">
+    <h1 class="h2 border-left pl-2">{{tituloPagina}}</h1>
+  </div>
+  <div class="col-md">
+    <a routerLink="/categorias" class="btn btn-light float-right">Voltar</a>
+  </div>
+</div>
+
+<form [formGroup]="formularioCategoria" (submit)="enviarFormulario()">
+
+  <div class="card mb-4">
+    <div class="card-header">
+      Informações sobre a categoria
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" id="nome" formControlName="nome">
+          <div class="text-danger"
+            *ngIf="formularioCategoria.get('nome').invalid && formularioCategoria.get('nome').touched">
+            <div *ngIf="formularioCategoria.get('nome').errors.required">Campo obrigatório</div>
+            <div *ngIf="formularioCategoria.get('nome').errors.minlength">O campo deve ter pelo menos 3 caracteres</div>
+            <div *ngIf="formularioCategoria.get('nome').errors.maxlength">O campo deve ter no maxímo 30 caracteres</div>
+          </div>
+        </div>
+        <div class="form-group col-md-8">
+          <label for="descricao">Descricao</label>
+          <input type="text" class="form-control" id="descricao" formControlName="descricao">
+          <div class="text-danger"
+            *ngIf="formularioCategoria.get('descricao').invalid && formularioCategoria.get('descricao').touched">
+            <div *ngIf="formularioCategoria.get('descricao').errors.required">Campo obrigatório</div>
+            <div *ngIf="formularioCategoria.get('descricao').errors.minlength">O campo deve ter pelo menos 3 caracteres</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button [disabled]="isEnviando || formularioCategoria.invalid" type="submit"
+    class="btn btn-primary btn-lg float-right">Salvar</button>
+
+</form>
