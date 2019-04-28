@@ -19,7 +19,7 @@ export class FormularioCategoriaComponent implements OnInit, AfterContentChecked
   acao: string;
   formularioCategoria: FormGroup;
   tituloPagina: string;
-  serverErrorMessages: string[] = null;
+  serverErrorMessage: any;
   isEnviando: boolean = false;
   categoria: Categoria = new Categoria();
 
@@ -43,7 +43,7 @@ export class FormularioCategoriaComponent implements OnInit, AfterContentChecked
 
   enviarFormulario() {
     this.isEnviando = true;
-    
+
     if (this.acao == "novo") {
       this.criarCategoria();
     } else {
@@ -102,7 +102,7 @@ export class FormularioCategoriaComponent implements OnInit, AfterContentChecked
     )
   }
 
-  private editarCategoria(){
+  private editarCategoria() {
     const categoria: Categoria = Object.assign(new Categoria(), this.formularioCategoria.value);
 
     this.categoriaService.editar(categoria).subscribe(
@@ -132,9 +132,8 @@ export class FormularioCategoriaComponent implements OnInit, AfterContentChecked
     }
 
     this.isEnviando = false;
+    this.serverErrorMessage = error.error;
 
-    this.serverErrorMessages = JSON.parse(error._body).errors;
   }
-
 
 }

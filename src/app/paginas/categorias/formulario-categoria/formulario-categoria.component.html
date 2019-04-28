@@ -11,7 +11,7 @@
     <h1 class="h2 border-left pl-2">{{tituloPagina}}</h1>
   </div>
   <div class="col-md">
-    <a routerLink="/categorias" class="btn btn-light float-right">Voltar</a>
+    <a *ngIf="acao != 'novo'" routerLink="/categorias/novo" class="btn btn-light float-right">Nova Categoria</a>
   </div>
 </div>
 
@@ -39,13 +39,25 @@
           <div class="text-danger"
             *ngIf="formularioCategoria.get('descricao').invalid && formularioCategoria.get('descricao').touched">
             <div *ngIf="formularioCategoria.get('descricao').errors.required">Campo obrigatório</div>
-            <div *ngIf="formularioCategoria.get('descricao').errors.minlength">O campo deve ter pelo menos 3 caracteres</div>
+            <div *ngIf="formularioCategoria.get('descricao').errors.minlength">O campo deve ter pelo menos 3 caracteres
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="alert alert-danger mt-4" *ngIf="serverErrorMessage">
+    <strong>Erro no servidor: </strong>
+   <ul>
+     <li>Status Code: {{serverErrorMessage.status}}</li>
+     <li>Error: {{serverErrorMessage.error}}</li>
+     <li>Mensagem: {{serverErrorMessage.message}}</li>
+   </ul>
+  </div>
+
   <button [disabled]="isEnviando || formularioCategoria.invalid" type="submit"
-    class="btn btn-primary btn-lg float-right">Salvar</button>
+    class="btn btn-primary btn-lg float-right ml-2">Salvar</button>
+  <a routerLink="/categorias" class="btn btn-light btn-lg float-right">Voltar</a>
 
 </form>
