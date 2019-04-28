@@ -76,5 +76,6 @@ ng g c paginas/categorias/formulario-categoria
 
 //Comando para criar o service "categoria.service.ts" que ficará no caminho "paginas/categorias/classes"
 ng g s paginas/categorias/classes/categoria
- 
- 
+
+//Comando pra criar o modulo "lancamentos" que ficará no caminho "src/app/paginas".
+ng g m paginas/lancamentos --routing

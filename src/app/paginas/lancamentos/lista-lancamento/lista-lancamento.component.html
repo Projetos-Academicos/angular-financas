@@ -1,0 +1,46 @@
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/" class="">Home</a></li>
+    <li class="breadcrumb-item active">Lançamentos</li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md">
+    <h1 class="h2 border-left pl-2">Lançamentos</h1>
+  </div>
+  <div class="col-md">
+    <a routerLink="novo" class="btn btn-primary float-right">Novo Lançamento</a>
+  </div>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr class="bg-primary text-light">
+      <th>Nome</th>
+      <th>Categoria</th>
+      <th>Valor</th>
+      <th>Situação</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let lancamento of lancamentos">
+      <td><strong>{{lancamento.nome}}</strong><br>
+        <small class="text-success mr-2">{{lancamento.data}}</small>
+        <small>-</small>
+        <small *ngIf="lancamento.tipo == 'RECEITA'" class="text-success ml-2">{{lancamento.tipo}}</small>
+        <small *ngIf="lancamento.tipo == 'DESPESA'" class="text-danger ml-2">{{lancamento.tipo}}</small>
+       <br> <small>{{lancamento.descricao}}</small>
+      </td>
+      <td class="vertical-align-center">{{lancamento.categoria.nome}}</td>
+      <td class="vertical-align-center">{{lancamento.valor}}</td>
+      <td class="vertical-align-center">{{lancamento.status}}</td>
+      <td class="vertical-align-center">
+        <a [routerLink]="[lancamento.id, 'visualizar']" class="btn btn-outline-info btn-sm mr-3">Visualizar</a>
+        <a [routerLink]="[lancamento.id, 'editar']" class="btn btn-outline-warning btn-sm mr-3">Editar</a>
+        <button (click)="excluir(lancamento)" class="btn btn-outline-danger btn-sm">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
