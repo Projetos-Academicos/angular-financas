@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LancamentosRoutingModule } from './lancamentos-routing.module';
 
 import { ListaLancamentoComponent } from "./lista-lancamento/lista-lancamento.component";
+//import { FormularioLancamentoComponent } from "./formulario-lancamento/formulario-lancamento.component";
 
 @NgModule({
   declarations: [ListaLancamentoComponent],

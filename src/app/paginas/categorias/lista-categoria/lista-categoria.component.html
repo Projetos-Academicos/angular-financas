@@ -18,7 +18,7 @@
   <thead>
     <tr class="bg-primary text-light">
       <th>Categoria</th>
-      <th>Ações</th>
+      <th class="text-center">Ações</th>
     </tr>
   </thead>
   <tbody>
@@ -26,7 +26,7 @@
       <td><strong>{{categoria.nome}}</strong><br>
         <small>{{categoria.descricao}}</small>
       </td>
-      <td>
+      <td class="text-center">
         <a [routerLink]="[categoria.id, 'editar']" class="btn btn-outline-warning btn-sm mr-3">Editar</a>
         <button (click)="excluir(categoria)" class="btn btn-outline-danger btn-sm">Excluir</button>
       </td>
