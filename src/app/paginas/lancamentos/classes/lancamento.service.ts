@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, flatMap } from 'rxjs/operators';
 import { Lancamento } from './lancamento.model';
+import { Status } from "./status.model";
 import { element } from 'protractor';
 
 @Injectable({
@@ -11,6 +12,7 @@ import { element } from 'protractor';
 export class LancamentoService {
 
   private apiPath: string = "http://localhost:8080/lancamentos";
+  private apiPathStatus: string = "http://localhost:8080/status";
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +20,13 @@ export class LancamentoService {
     return this.http.get(this.apiPath).pipe(
       catchError(this.handleError),
       map(this.jsonDataToLancamentos)
+    )
+  }
+
+  getAllStatus(): Observable<Status[]> {
+    return this.http.get(this.apiPathStatus).pipe(
+      catchError(this.handleError),
+      map(this.jsonDataToStatus)
     )
   }
 
@@ -58,12 +67,24 @@ export class LancamentoService {
 
   private jsonDataToLancamentos(jsonData: any[]): Lancamento[] {
     const lancamentos: Lancamento[] = [];
-    jsonData.forEach(element => lancamentos.push(element as Lancamento));
+    jsonData.forEach(element => {
+      const lancamento = Object.assign(new Lancamento(), element);
+      lancamentos.push(lancamento);
+    });
     return lancamentos;
   }
 
+  private jsonDataToStatus(jsonData: any[]): Status[] {
+    const status: Status[] = [];
+    jsonData.forEach(element => {
+      const statusAux = Object.assign(new Status(), element);
+      status.push(statusAux);
+    });
+    return status;
+  }
+
   private jsonDataToLancamento(jsonData: any): Lancamento {
-    return jsonData as Lancamento;
+    return Object.assign(new Lancamento(), jsonData);
   }
 
   private handleError(error: any): Observable<any> {

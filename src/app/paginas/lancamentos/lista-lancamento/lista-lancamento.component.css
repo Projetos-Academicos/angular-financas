@@ -1,7 +1,12 @@
-  .btn-outline-warning:hover {
-    color: white;
+  .btn-outline-warning:hover, .btn-outline-info:hover {
+    color: white !important;
   }
-
+  .btn-outline-warning{
+    color: #ffc107 !important;
+  }
+  .btn-outline-info {
+    color: #17a2b8 !important;
+  }
   .table td {
     vertical-align: middle;
 }

@@ -29,16 +29,17 @@
       <td><strong>{{lancamento.nome}}</strong><br>
         <small class="text-success mr-2">{{lancamento.data}}</small>
         <small>-</small>
-        <small [class.text-success] = "lancamento.tipo == 'RECEITA'" [class.text-danger] = "lancamento.tipo == 'DESPESA'" class="ml-2">{{lancamento.tipo}}</small>
-       <br> <small>{{lancamento.descricao}}</small>
+        <small [class.text-success]="lancamento.despesa == false" [class.text-danger]="lancamento.despesa == true"
+          class="ml-2">{{lancamento.despesaText}}</small>
+        <br> <small>{{lancamento.descricao}}</small>
       </td>
       <td>{{lancamento.categoria.nome}}</td>
       <td class="text-right">
-        <strong [class.text-success] = "lancamento.tipo == 'RECEITA'" [class.text-danger] = "lancamento.tipo == 'DESPESA'">
-            {{lancamento.valor}}
+        <strong [class.text-success]="lancamento.despesa == false" [class.text-danger]="lancamento.despesa == true">
+          {{lancamento.valor}}
         </strong>
       </td>
-      <td class="text-center">{{lancamento.status}}</td>
+      <td class="text-center">{{lancamento.status.nome}}</td>
       <td class="text-center">
         <a [routerLink]="[lancamento.id, 'visualizar']" class="btn btn-outline-info btn-sm mr-3">Visualizar</a>
         <a [routerLink]="[lancamento.id, 'editar']" class="btn btn-outline-warning btn-sm mr-3">Editar</a>

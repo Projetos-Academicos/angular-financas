@@ -19,45 +19,167 @@
 
   <div class="card mb-4">
     <div class="card-header">
-      Informações sobre a lancamento
+      Informações sobre o lancamento
     </div>
     <div class="card-body">
       <div class="form-row">
-        <div class="form-group col-md-4">
+
+        <!--despesa-->
+        <div class="form-group col-md-2">
+            <label for="despesa">Tipo</label><br>
+            <div class="btn-group">
+              <label (click)="formularioLancamento.get('despesa').setValue(true)"
+                [class.active]="formularioLancamento.get('despesa').value ==  true"
+                class="btn btn-outline-info">Despesa</label>
+              <label (click)="formularioLancamento.get('despesa').setValue(false)"
+                [class.active]="formularioLancamento.get('despesa').value == false"
+                class="btn btn-outline-info">Receita</label>
+            </div>
+          </div>
+
+        <!--NOME-->
+        <div class="form-group col-md-6">
           <label for="nome">Nome</label>
-          <input type="text" class="form-control" id="nome" formControlName="nome">
+          <input [readOnly]="acao == 'visualizacao'" type="text" class="form-control" id="nome" formControlName="nome">
           <div class="text-danger"
             *ngIf="formularioLancamento.get('nome').invalid && formularioLancamento.get('nome').touched">
             <div *ngIf="formularioLancamento.get('nome').errors.required">Campo obrigatório</div>
-            <div *ngIf="formularioLancamento.get('nome').errors.minlength">O campo deve ter pelo menos 3 caracteres</div>
-            <div *ngIf="formularioLancamento.get('nome').errors.maxlength">O campo deve ter no maxímo 30 caracteres</div>
-          </div>
-        </div>
-        <div class="form-group col-md-8">
-          <label for="descricao">Descricao</label>
-          <input type="text" class="form-control" id="descricao" formControlName="descricao">
-          <div class="text-danger"
-            *ngIf="formularioLancamento.get('descricao').invalid && formularioLancamento.get('descricao').touched">
-            <div *ngIf="formularioLancamento.get('descricao').errors.required">Campo obrigatório</div>
-            <div *ngIf="formularioLancamento.get('descricao').errors.minlength">O campo deve ter pelo menos 3 caracteres
+            <div *ngIf="formularioLancamento.get('nome').errors.minlength">O campo deve ter pelo menos 3 caracteres
+            </div>
+            <div *ngIf="formularioLancamento.get('nome').errors.maxlength">O campo deve ter no maxímo 30 caracteres
             </div>
           </div>
         </div>
+
+        <!--DATA-->
+        <div class="form-group col-md-2">
+          <label for="data">Data</label>
+          <p-calendar id="data" formControlName="data" inputStyleClass="form-control" dataType="string"
+            dateFormat="dd/mm/yy" [locale]="ptBr" [showButtonBar]="true">
+          </p-calendar>
+          <div class="text-danger"
+            *ngIf="formularioLancamento.get('data').invalid && formularioLancamento.get('data').touched">
+            <div *ngIf="formularioLancamento.get('data').errors.required">Campo obrigatório</div>
+          </div>
+        </div>
+
       </div>
+
+      <div class="form-row">
+
+        <!--DESCRIÇAO-->
+        <div class="form-group col-md-8">
+          <label for="descricao">Descricao</label>
+          <input [readOnly]="acao == 'visualizacao'" type="text" class="form-control" id="descricao"
+            formControlName="descricao">
+          <div class="text-danger"
+            *ngIf="formularioLancamento.get('descricao').invalid && formularioLancamento.get('descricao').touched">
+            <div *ngIf="formularioLancamento.get('descricao').errors.required">Campo obrigatório</div>
+            <div *ngIf="formularioLancamento.get('descricao').errors.minlength">O campo deve ter pelo menos 3
+              caracteres
+            </div>
+          </div>
+        </div>
+
+        <!--VALOR-->
+        <div class="form-group col-md-2">
+          <label for="valor">Valor</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">R$</div>
+            </div>
+            <input [imask]="imaskConfig" type="text" class="form-control text-right" id="valor" formControlName="valor">
+          </div>
+          <div class="text-danger"
+            *ngIf="formularioLancamento.get('valor').invalid && formularioLancamento.get('valor').touched">
+            <div *ngIf="formularioLancamento.get('valor').errors.required">Campo obrigatório</div>
+          </div>
+        </div>
+
+        <!--parcelado-->
+        <div class="form-group col-md-2" *ngIf="formularioLancamento.get('despesa').value ==  true">
+          <label for="parcelado">Foi parcelado?</label><br>
+          <div class="btn-group">
+            <label (click)="formularioLancamento.get('parcelado').setValue(true)"
+              [class.active]="formularioLancamento.get('parcelado').value ==  true"
+              class="btn btn-outline-info">Sim</label>
+            <label (click)="formularioLancamento.get('parcelado').setValue(false)"
+              [class.active]="formularioLancamento.get('parcelado').value == false"
+              class="btn btn-outline-info">Não</label>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-row">
+
+        <!--QUANTIDADE PARCELAS-->
+        <div class="form-group col-md-3" *ngIf="formularioLancamento.get('parcelado').value ==  true">
+          <label for="qntParcelas">Quantidade de Parcelas</label>
+          <input [imask]="numberConfig" type="text" class="form-control text-right" formControlName="qntParcelas">
+          <div class="text-danger"
+            *ngIf="formularioLancamento.get('qntParcelas').invalid && formularioLancamento.get('qntParcelas').touched">
+            <div *ngIf="formularioLancamento.get('qntParcelas').errors.required">Campo obrigatório</div>
+          </div>
+        </div>
+
+        <!--VALOR DE CADA PARCELA-->
+        <div class="form-group col-md-3" *ngIf="formularioLancamento.get('parcelado').value ==  true">
+          <label for="valor">Valor de Cada Parcela</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">R$</div>
+            </div>
+            <input [imask]="imaskConfig" type="text" class="form-control text-right" id="vlrParcelas"
+              formControlName="vlrParcelas">
+          </div>
+          <div class="text-danger"
+            *ngIf="formularioLancamento.get('vlrParcelas').invalid && formularioLancamento.get('vlrParcelas').touched">
+            <div *ngIf="formularioLancamento.get('vlrParcelas').errors.required">Campo obrigatório</div>
+          </div>
+        </div>
+
+        <!--CATEGORIA-->
+        <div class="form-group col-md-3">
+          <label for="categoriaId">Categoria</label>
+          <select name="categoriaId" id="categoriaId" formControlName="categoriaId" class="form-control">
+            <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.nome}}</option>
+          </select>
+          <div class="text-danger"
+            *ngIf="formularioLancamento.get('categoriaId').invalid && formularioLancamento.get('categoriaId').touched">
+            <div *ngIf="formularioLancamento.get('categoriaId').errors.required">Campo obrigatório</div>
+          </div>
+        </div>
+
+         <!--STATUS-->
+         <div class="form-group col-md-3">
+            <label for="statusId">Situação</label>
+            <select name="statusId" id="statusId" formControlName="statusId" class="form-control">
+              <option *ngFor="let situacao of status" value="{{situacao.id}}">{{situacao.nome}}</option>              
+            </select>
+            <div class="text-danger"
+              *ngIf="formularioLancamento.get('statusId').invalid && formularioLancamento.get('statusId').touched">
+              <div *ngIf="formularioLancamento.get('statusId').errors.required">Campo obrigatório</div>
+            </div>
+          </div>
+
+      </div>
+
     </div>
   </div>
 
   <div class="alert alert-danger mt-4" *ngIf="serverErrorMessage">
     <strong>Erro no servidor: </strong>
-   <ul>
-     <li>Status Code: {{serverErrorMessage.status}}</li>
-     <li>Error: {{serverErrorMessage.error}}</li>
-     <li>Mensagem: {{serverErrorMessage.message}}</li>
-   </ul>
+    <ul>
+      <li>Status Code: {{serverErrorMessage.status}}</li>
+      <li>Error: {{serverErrorMessage.error}}</li>
+      <li>Mensagem: {{serverErrorMessage.message}}</li>
+    </ul>
   </div>
 
-  <button [disabled]="isEnviando || formularioLancamento.invalid" type="submit"
+  <button [disabled]="isEnviando || formularioLancamento.invalid || acao == 'visualizacao'" type="submit"
     class="btn btn-primary btn-lg float-right ml-2">Salvar</button>
   <a routerLink="/lancamentos" class="btn btn-light btn-lg float-right">Voltar</a>
 
 </form>
+
+<pre>{{formularioLancamento.value | json}}</pre>

@@ -3,7 +3,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { Lancamento } from "../classes/lancamento.model";
+import { Categoria } from "../../categorias/classes/categoria.model";
+import { Status } from "../classes/status.model";
 import { LancamentoService } from "../classes/lancamento.service";
+import { CategoriaService } from "../../categorias/classes/categoria.service";
 
 import { switchMap } from "rxjs/operators";
 
@@ -16,24 +19,57 @@ import toastr from "toastr";
 })
 export class FormularioLancamentoComponent implements OnInit, AfterContentChecked {
 
+  //VARIAVEIS GLOABAIS
+
   acao: string;
   formularioLancamento: FormGroup;
   tituloPagina: string;
   serverErrorMessage: any;
   isEnviando: boolean = false;
   lancamento: Lancamento = new Lancamento();
+  categorias: Array<Categoria>;
+  status: Array<Status>;
+
+  //METODOS PUBLICOS
+
+  imaskConfig = {
+    mask: Number,
+    scale: 2,
+    thousandsSeparator: '.',
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radix: ','
+  };
+
+  numberConfig = {
+    mask: Number
+  }
+
+  ptBr ={
+    firstDayOfWeek: 0,
+    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    dayNamesMin: ['Do', 'Se', 'Te', 'Qu', 'Qu', 'Se', 'Sa'],
+    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    today: 'Hoje',
+    clear: 'Limpar'
+  }
 
   constructor(
     private lancamentoService: LancamentoService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBiulder: FormBuilder
+    private formBiulder: FormBuilder,
+    private categoriaService: CategoriaService
   ) { }
 
   ngOnInit() {
     this.setAcao();
     this.montarFormularioLancamento();
     this.carregarLancamento();
+    this.carregarCategorias();
+    this.carregarStatus();
 
   }
 
@@ -69,14 +105,16 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
       id: [null],
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       descricao: [null, [Validators.required, Validators.minLength(3)]],
-      categoria: [null, Validators.required],
+      categoria: [null],
+      categoriaId: [null, Validators.required],
       valor: [null, Validators.required],
       data: [null, Validators.required],
-      isParcelado: [false, Validators.required],
-      qntParcelas: [null],
-      vlrParcelas: [null],
-      status: [null, Validators.required],
-      tipo: [null, Validators.required]
+      parcelado: [false, Validators.required],
+      qntParcelas: [null, Validators.required],
+      vlrParcelas: [null, Validators.required],
+      status: [null],
+      statusId: [null, Validators.required],
+      despesa: [true, Validators.required]
     })
   }
 
@@ -146,6 +184,18 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
     this.isEnviando = false;
     this.serverErrorMessage = error.error;
 
+  }
+
+  carregarCategorias(){
+    return this.categoriaService.getAll().subscribe(
+      categorias => this.categorias = categorias
+    )
+  }
+
+  carregarStatus(){
+    return this.lancamentoService.getAllStatus().subscribe(
+      status => this.status = status
+    )
   }
 
 }
