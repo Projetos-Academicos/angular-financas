@@ -10,7 +10,7 @@ import { element } from 'protractor';
 })
 export class CategoriaService {
 
-  private apiPath: string = "http://localhost:8080/categorias";
+  private apiPath: string = "https://api-finansys.herokuapp.com/categorias";
 
   constructor(private http: HttpClient) { }
 
