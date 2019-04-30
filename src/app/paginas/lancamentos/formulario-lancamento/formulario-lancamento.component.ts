@@ -26,6 +26,7 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
   tituloPagina: string;
   serverErrorMessage: any;
   isEnviando: boolean = false;
+  isBloquearBtnSalvar: boolean = true;
   lancamento: Lancamento = new Lancamento();
   categorias: Array<Categoria>;
   status: Array<Status>;
@@ -70,6 +71,7 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
     this.carregarLancamento();
     this.carregarCategorias();
     this.carregarStatus();
+    this.setIsBloquearBtnSalvar();
 
   }
 
@@ -84,6 +86,16 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
       this.criarLancamento();
     } else {
       this.editarLancamento();
+    }
+  }
+
+  setIsBloquearBtnSalvar(){
+    if(this.formularioLancamento.get('parcelado').value == true &&
+      this.formularioLancamento.get('qntParcelas').value == '' &&
+      this.formularioLancamento.get('vlrParcelas').value == '' ){
+      this.isBloquearBtnSalvar = true;
+    }else{
+      this.isBloquearBtnSalvar = false;
     }
   }
 
@@ -110,8 +122,8 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
       valor: [null, Validators.required],
       data: [null, Validators.required],
       parcelado: [false, Validators.required],
-      qntParcelas: [null, Validators.required],
-      vlrParcelas: [null, Validators.required],
+      qntParcelas: [null],
+      vlrParcelas: [null],
       status: [null],
       statusId: [null, Validators.required],
       despesa: [true, Validators.required]

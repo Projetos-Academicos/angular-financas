@@ -54,7 +54,7 @@
         <!--DATA-->
         <div class="form-group col-md-2">
           <label for="data">Data</label>
-          <p-calendar id="data" formControlName="data" inputStyleClass="form-control" dataType="string"
+          <p-calendar [disabled]="acao == 'visualizacao'" id="data" formControlName="data" inputStyleClass="form-control" dataType="string"
             dateFormat="dd/mm/yy" [locale]="ptBr" [showButtonBar]="true">
           </p-calendar>
           <div class="text-danger"
@@ -88,7 +88,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">R$</div>
             </div>
-            <input [imask]="imaskConfig" type="text" class="form-control text-right" id="valor" formControlName="valor">
+            <input [readOnly]="acao == 'visualizacao'" [imask]="imaskConfig" type="text" class="form-control text-right" id="valor" formControlName="valor">
           </div>
           <div class="text-danger"
             *ngIf="formularioLancamento.get('valor').invalid && formularioLancamento.get('valor').touched">
@@ -110,15 +110,15 @@
         </div>
 
       </div>
-      <div class="form-row">
+      <div class="form-row"> 
 
         <!--QUANTIDADE PARCELAS-->
         <div class="form-group col-md-3" *ngIf="formularioLancamento.get('parcelado').value ==  true">
           <label for="qntParcelas">Quantidade de Parcelas</label>
-          <input [imask]="numberConfig" type="text" class="form-control text-right" formControlName="qntParcelas">
+          <input [readOnly]="acao == 'visualizacao'" [imask]="numberConfig" type="text" class="form-control text-right" formControlName="qntParcelas">
           <div class="text-danger"
-            *ngIf="formularioLancamento.get('qntParcelas').invalid && formularioLancamento.get('qntParcelas').touched">
-            <div *ngIf="formularioLancamento.get('qntParcelas').errors.required">Campo obrigatório</div>
+            *ngIf="formularioLancamento.get('parcelado').value ==  true && formularioLancamento.get('qntParcelas').touched">
+            <div *ngIf="formularioLancamento.get('qntParcelas').value == '' || formularioLancamento.get('qntParcelas').value == null">Campo obrigatório</div>
           </div>
         </div>
 
@@ -129,12 +129,12 @@
             <div class="input-group-prepend">
               <div class="input-group-text">R$</div>
             </div>
-            <input [imask]="imaskConfig" type="text" class="form-control text-right" id="vlrParcelas"
+            <input [readOnly]="acao == 'visualizacao'" [imask]="imaskConfig" type="text" class="form-control text-right" id="vlrParcelas"
               formControlName="vlrParcelas">
           </div>
           <div class="text-danger"
-            *ngIf="formularioLancamento.get('vlrParcelas').invalid && formularioLancamento.get('vlrParcelas').touched">
-            <div *ngIf="formularioLancamento.get('vlrParcelas').errors.required">Campo obrigatório</div>
+            *ngIf="formularioLancamento.get('parcelado').value ==  true && formularioLancamento.get('vlrParcelas').touched">
+            <div *ngIf="formularioLancamento.get('vlrParcelas').value == '' || formularioLancamento.get('vlrParcelas').value == null">Campo obrigatório</div>
           </div>
         </div>
 
@@ -176,10 +176,9 @@
     </ul>
   </div>
 
-  <button [disabled]="isEnviando || formularioLancamento.invalid || acao == 'visualizacao'" type="submit"
-    class="btn btn-primary btn-lg float-right ml-2">Salvar</button>
+  <button [disabled]="isEnviando || formularioLancamento.invalid || acao == 'visualizacao' || isBloquearBtnSalvar" type="submit"
+    class="btn btn-primary btn-lg float-right ml-2 mb-4">Salvar</button>
   <a routerLink="/lancamentos" class="btn btn-light btn-lg float-right">Voltar</a>
-
 </form>
 
-<pre>{{formularioLancamento.value | json}}</pre>
+<!-- <pre>{{formularioLancamento.value | json}}</pre> -->
