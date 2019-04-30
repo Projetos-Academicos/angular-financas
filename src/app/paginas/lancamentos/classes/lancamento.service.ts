@@ -11,8 +11,11 @@ import { element } from 'protractor';
 })
 export class LancamentoService {
 
-  private apiPath: string = "https://api-finansys.herokuapp.com/lancamentos";
-  private apiPathStatus: string = "https://api-finansys.herokuapp.com/status";
+  private apiPathProducao: string = "https://api-finansys.herokuapp.com/lancamentos";
+  private apiPathStatusProducao: string = "https://api-finansys.herokuapp.com/status";
+
+  private apiPath: string = "http://localhost:8080/lancamentos";
+  private apiPathStatus: string = "http://localhost:8080/status";
 
   constructor(private http: HttpClient) { }
 
