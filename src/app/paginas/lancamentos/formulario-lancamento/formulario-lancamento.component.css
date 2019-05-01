@@ -1,3 +1,16 @@
 .btn-light{
     background-color: #edf0f3;
 }
+
+.btn-modo-visualizacao-off {
+    color: #17a2b8;
+    border-color: #17a2b8;
+    background-color: #fff;
+} 
+
+.btn-modo-visualizacao-on {
+    color: #fff;
+    border-color: #17a2b8;
+    background-color:  #17a2b8;
+} 
+

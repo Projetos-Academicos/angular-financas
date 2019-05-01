@@ -60,7 +60,7 @@ npm i angular-in-memory-web-api --save
 
 
 --------------------------------------- FINALIZANDO PRIMEIRO MODULO DO CURSO -------------------------------------------------------------------------------
-
+-- npm install jquery --save (INSTALAR CASO FUNCIONE NA SEFAZ)
 
 --------------------------------------- INICIANDO SEGUNDO MODULO DO CURSO -------------------------------------------------------------------------------
 *** COMANDOS DE DESENVOLVIMENTO ***

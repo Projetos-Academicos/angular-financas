@@ -20,18 +20,12 @@ export class ListaLancamentoComponent implements OnInit {
       error => alert('Erro ao carregar os lancamentos')
     )
   }
-  
+
   excluir(lancamento) {
-
-    const confirmarExclusao = confirm('Deseja realmente excluir esse registro?');
-    if(confirmarExclusao) {
-
-      this.lancamentoService.excluir(lancamento.id).subscribe(
-        () => this.lancamentos = this.lancamentos.filter(element => element != lancamento),
-        () => alert('Erro ao tentar excluir')
-      )  
-    
-    }        
+    this.lancamentoService.excluir(lancamento.id).subscribe(
+      () => this.lancamentos = this.lancamentos.filter(element => element != lancamento),
+      () => alert('Erro ao tentar excluir')
+    )
   }
 
 }

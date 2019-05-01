@@ -9,6 +9,7 @@ import { LancamentoService } from "../classes/lancamento.service";
 import { CategoriaService } from "../../categorias/classes/categoria.service";
 
 import { switchMap } from "rxjs/operators";
+import * as $ from 'jquery';
 
 import toastr from "toastr";
 
@@ -25,8 +26,7 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
   formularioLancamento: FormGroup;
   tituloPagina: string;
   serverErrorMessage: any;
-  isEnviando: boolean = false;
-  isBloquearBtnSalvar: boolean = true;
+  isEnviando: boolean = false;  
   lancamento: Lancamento = new Lancamento();
   categorias: Array<Categoria>;
   status: Array<Status>;
@@ -46,7 +46,7 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
     mask: Number
   }
 
-  ptBr ={
+  ptBr = {
     firstDayOfWeek: 0,
     dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
     dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
@@ -71,7 +71,7 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
     this.carregarLancamento();
     this.carregarCategorias();
     this.carregarStatus();
-    this.setIsBloquearBtnSalvar();
+    this.disableOrEnableSelect();
 
   }
 
@@ -88,26 +88,16 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
       this.editarLancamento();
     }
   }
-
-  setIsBloquearBtnSalvar(){
-    if(this.formularioLancamento.get('parcelado').value == true &&
-      this.formularioLancamento.get('qntParcelas').value == '' &&
-      this.formularioLancamento.get('vlrParcelas').value == '' ){
-      this.isBloquearBtnSalvar = true;
-    }else{
-      this.isBloquearBtnSalvar = false;
-    }
-  }
-
+  
   //METODOS PRIVADOS
 
   private setAcao() {
 
     if (this.route.snapshot.url[0].path == "novo") {
       this.acao = "novo"
-    } else if(this.route.snapshot.url[1].path == "editar") {
+    } else if (this.route.snapshot.url[1].path == "editar") {
       this.acao = "edicao"
-    }else{
+    } else {
       this.acao = "visualizacao"
     }
   }
@@ -147,9 +137,9 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
   private setPaginaTitulo() {
     if (this.acao == "novo") {
       this.tituloPagina = "Cadastro de Lancamento"
-    } else if(this.acao == "edicao") {
+    } else if (this.acao == "edicao") {
       this.tituloPagina = "Atualizar Lancamento"
-    }else{
+    } else {
       this.tituloPagina = "Visualizar Lancamento"
     }
   }
@@ -171,6 +161,13 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
       lancamento => this.salvoComSucesso(lancamento),
       error => this.erroAoSalvar(error)
     )
+  }
+  
+  private disableOrEnableSelect() {
+    if(this.acao == 'visualizacao'){
+      $( "#categoriaId" ).prop( "disabled", true );
+      $( "#statusId" ).prop( "disabled", true );      
+    }    
   }
 
   private salvoComSucesso(lancamento: Lancamento) {
@@ -198,13 +195,13 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
 
   }
 
-  carregarCategorias(){
+  carregarCategorias() {
     return this.categoriaService.getAll().subscribe(
       categorias => this.categorias = categorias
     )
   }
 
-  carregarStatus(){
+  carregarStatus() {
     return this.lancamentoService.getAllStatus().subscribe(
       status => this.status = status
     )

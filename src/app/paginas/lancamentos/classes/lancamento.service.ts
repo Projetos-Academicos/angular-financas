@@ -11,8 +11,8 @@ import { element } from 'protractor';
 })
 export class LancamentoService {
 
-  private apiPathProducao: string = "https://api-finansys.herokuapp.com/lancamentos";
-  private apiPathStatusProducao: string = "https://api-finansys.herokuapp.com/status";
+  private  x: string = "https://api-finansys.herokuapp.com/lancamentos";
+  private y: string = "https://api-finansys.herokuapp.com/status";
 
   private apiPath: string = "http://localhost:8080/lancamentos";
   private apiPathStatus: string = "http://localhost:8080/status";
