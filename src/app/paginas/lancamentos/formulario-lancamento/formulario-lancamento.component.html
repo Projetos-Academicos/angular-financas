@@ -199,7 +199,7 @@
     </ul>
   </div>
 
-  <button [disabled]="isEnviando || formularioLancamento.invalid || acao == 'visualizacao' || isBloquearBtnSalvar"
+  <button [disabled]="isEnviando || formularioLancamento.invalid || acao == 'visualizacao'"
     type="submit" class="btn btn-primary btn-lg float-right ml-2 mb-4">Salvar</button>
   <a routerLink="/lancamentos" class="btn btn-light btn-lg float-right">Voltar</a>
 </form>

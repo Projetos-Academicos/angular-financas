@@ -14,8 +14,8 @@ export class LancamentoService {
   private  x: string = "https://api-finansys.herokuapp.com/lancamentos";
   private y: string = "https://api-finansys.herokuapp.com/status";
 
-  private apiPath: string = "http://localhost:8080/lancamentos";
-  private apiPathStatus: string = "http://localhost:8080/status";
+  private apiPath: string = "https://api-financas-prod.herokuapp.com/lancamentos";
+  private apiPathStatus: string = "https://api-financas-prod.herokuapp.com/status";
 
   constructor(private http: HttpClient) { }
 

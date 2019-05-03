@@ -11,7 +11,7 @@ import { element } from 'protractor';
 export class CategoriaService {
 
   private x: string = "https://api-finansys.herokuapp.com/categorias";
-  private apiPath: string = "http://localhost:8080/categorias";
+  private apiPath: string = "https://api-financas-prod.herokuapp.com/categorias";
 
   constructor(private http: HttpClient) { }
 

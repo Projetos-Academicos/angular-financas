@@ -3,6 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Lancamento } from "../classes/lancamento.model";
 import { LancamentoService } from "../classes/lancamento.service";
 
+import * as $ from 'jquery';
+
+import toastr from "toastr";
+
+declare var $: any;
+
 @Component({
   selector: 'app-lista-lancamento',
   templateUrl: './lista-lancamento.component.html',
@@ -22,10 +28,15 @@ export class ListaLancamentoComponent implements OnInit {
   }
 
   excluir(lancamento) {
-    this.lancamentoService.excluir(lancamento.id).subscribe(
-      () => this.lancamentos = this.lancamentos.filter(element => element != lancamento),
-      () => alert('Erro ao tentar excluir')
-    )
+    const confirmarExclusao = confirm('Deseja realmente excluir esse registro?');
+    if (confirmarExclusao) {
+
+      this.lancamentoService.excluir(lancamento.id).subscribe(
+        () => this.lancamentos = this.lancamentos.filter(element => element != lancamento),
+        () => alert('Erro ao tentar excluir')
+      )
+    }
+
   }
 
 }

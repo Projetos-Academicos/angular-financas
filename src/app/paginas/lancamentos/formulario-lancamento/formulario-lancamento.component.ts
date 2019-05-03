@@ -13,6 +13,8 @@ import * as $ from 'jquery';
 
 import toastr from "toastr";
 
+declare var $: any;
+
 @Component({
   selector: 'app-formulario-lancamento',
   templateUrl: './formulario-lancamento.component.html',
@@ -26,7 +28,7 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
   formularioLancamento: FormGroup;
   tituloPagina: string;
   serverErrorMessage: any;
-  isEnviando: boolean = false;  
+  isEnviando: boolean = false;
   lancamento: Lancamento = new Lancamento();
   categorias: Array<Categoria>;
   status: Array<Status>;
@@ -80,15 +82,28 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
   }
 
   enviarFormulario() {
-    this.isEnviando = true;
 
-    if (this.acao == "novo") {
-      this.criarLancamento();
-    } else {
-      this.editarLancamento();
+
+    const qntParcelasNull = this.formularioLancamento.get('qntParcelas').value == null || this.formularioLancamento.get('qntParcelas').value == '';
+    const vlrParcelasNull = this.formularioLancamento.get('vlrParcelas').value == null || this.formularioLancamento.get('vlrParcelas').value == '';
+
+    if (this.formularioLancamento.get('parcelado').value == true && qntParcelasNull ) {
+      toastr.error("Campo Quantidade de Parcelas Obrigatório!");
+    }else if(this.formularioLancamento.get('parcelado').value == true && vlrParcelasNull){
+      toastr.error("Campo Valor de Cada Parcela Obrigatório!");
+    } 
+    else {
+      
+      this.isEnviando = true;
+
+      if (this.acao == "novo") {
+        this.criarLancamento();
+      } else {
+        this.editarLancamento();
+      }
     }
   }
-  
+
   //METODOS PRIVADOS
 
   private setAcao() {
@@ -111,7 +126,7 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
       categoriaId: [null, Validators.required],
       valor: [null, Validators.required],
       data: [null, Validators.required],
-      parcelado: [false, Validators.required],
+      parcelado: [false],
       qntParcelas: [null],
       vlrParcelas: [null],
       status: [null],
@@ -162,12 +177,12 @@ export class FormularioLancamentoComponent implements OnInit, AfterContentChecke
       error => this.erroAoSalvar(error)
     )
   }
-  
+
   private disableOrEnableSelect() {
-    if(this.acao == 'visualizacao'){
-      $( "#categoriaId" ).prop( "disabled", true );
-      $( "#statusId" ).prop( "disabled", true );      
-    }    
+    if (this.acao == 'visualizacao') {
+      $("#categoriaId").prop("disabled", true);
+      $("#statusId").prop("disabled", true);
+    }
   }
 
   private salvoComSucesso(lancamento: Lancamento) {
